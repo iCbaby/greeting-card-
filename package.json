@@ -1,0 +1,36 @@
+{
+  "name": "greeting-card",
+  "version": "1.0.0",
+  "description": "百库双十一贺卡",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node app",
+    "dev": "nodemon app",
+    "lint": "eslint --ext .js app",
+    "format": "prettier-standard --format"
+  },
+  "author": "iC",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^9.4.0",
+    "ajv": "^6.12.4",
+    "koa": "^2.13.0",
+    "koa-body": "^4.2.0",
+    "koa-json-error": "^3.1.2",
+    "koa-logger": "^3.2.1",
+    "koa-static": "^5.0.0",
+    "mongoose": "^5.10.2",
+    "mongoose-type-email": "^1.0.12"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "eslint": "^7.7.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "nodemon": "^2.0.4",
+    "prettier-standard": "^16.4.1"
+  }
+}
