@@ -8,11 +8,21 @@ const { Schema, model } = mongoose
 
 const orderSchema = new Schema(
   {
-    __v: { type: Number, select: false },
+    __v: {
+      type: Number,
+      select: false
+    },
     cardType: {
-      type: Schema.Types.ObjectId,
-      ref: 'Card',
+      type: String,
+      enum: ['玩', '美', '赢', '家'],
       required: true
+    },
+    value: {
+      type: Number,
+      required: true,
+      validate: value => {
+        return value === 10 || value === 66 || value === 88
+      }
     },
     remark: {
       type: String,

@@ -3,10 +3,7 @@
  * @author iC
  */
 
-const {
-  findOne,
-  registerUser
-} = require('../services/users')
+const { findOne, registerUser, find } = require('../services/users')
 const { requiredValidator } = require('../utils/requiredValidator')
 const { copyObj } = require('../utils/copyObj')
 // const { formatPagination } = require('../utils/pagination')
@@ -31,9 +28,19 @@ class UsersCtl {
       const params = copyObj(ctx.request.body)
       params.points = 100
       params.pointsReceived = 0
+      params.cardLimit = 2
       const newUser = await registerUser(params)
       ctx.body = newUser
     }
+  }
+
+  /**
+   * 查找user
+   * @param {Object} ctx 上下文
+   */
+  async findUser (ctx) {
+    const users = await find()
+    ctx.body = users
   }
 }
 

@@ -28,11 +28,8 @@ class UsersServ {
    * 查找用户列表
    * @param {Object} params 查询条件
    */
-  async find (params) {
-    const { perPage, page, name } = params
-    const users = await User.find({ name: new RegExp(name) })
-      .limit(perPage)
-      .skip(page * perPage)
+  async find () {
+    const users = await User.find()
     return users
   }
 }

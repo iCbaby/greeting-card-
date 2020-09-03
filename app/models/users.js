@@ -13,59 +13,27 @@ const userSchema = new Schema(
       type: Number,
       select: false
     },
-    name: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    mobile: {
-      type: String,
-      match: /^\d{11}$/,
-      require: true,
-      trim: true
-    },
-    email: {
-      type: Schema.Types.Email,
-      required: true
-    },
-    avatarUrl: {
-      type: String,
-      default: '',
-      trim: true
-    },
-    department: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    jobNumber: {
-      type: String,
-      required: true,
-      index: true,
-      trim: true
-    },
-    costCenter: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    nickName: {
-      type: String,
-      trim: true
-    },
     dingdingNumber: {
       type: String,
       required: true,
-      trim: true
+      unique: true
     },
-    points: {
+    cardLimit_11: {
       type: Number,
       min: 0,
+      max: 2,
       require: true
     },
-    pointsReceived: {
+    cardLimit_66: {
       type: Number,
       min: 0,
+      max: 2,
+      require: true
+    },
+    cardLimit_88: {
+      type: Number,
+      min: 0,
+      max: 2,
       require: true
     }
   },
