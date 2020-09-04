@@ -4,8 +4,8 @@
  */
 
 const { findOne, registerUser, find } = require('../services/users')
-const { requiredValidator } = require('../utils/requiredValidator')
-const { copyObj } = require('../utils/copyObj')
+// const { requiredValidator } = require('../utils/requiredValidator')
+// const { copyObj } = require('../utils/copyObj')
 // const { formatPagination } = require('../utils/pagination')
 
 class UsersCtl {
@@ -13,22 +13,18 @@ class UsersCtl {
    * 登录
    * @param {Object} ctx 上下文
    */
-  async login (ctx, next) {
-    requiredValidator(
-      ['name', 'mobile', 'email', 'department', 'jobNumber', 'costCenter', 'dingdingNumber'],
-      ctx
-    )
-
-    const { jobNumber } = ctx.request.body
-    const user = await findOne({ jobNumber })
+  async findOrLoginUser (ctx, next) {
+    const { dingdingNumber } = ctx.request.body
+    const user = await findOne({ dingdingNumber })
     if (user) {
-      console.log('已有')
       ctx.body = user
     } else {
-      const params = copyObj(ctx.request.body)
-      params.points = 100
-      params.pointsReceived = 0
-      params.cardLimit = 2
+      const params = {
+        dingdingNumber,
+        cardLimit_11: 2,
+        cardLimit_66: 2,
+        cardLimit_88: 2
+      }
       const newUser = await registerUser(params)
       ctx.body = newUser
     }

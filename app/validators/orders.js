@@ -10,21 +10,23 @@ const SCHEMA = {
   type: 'object',
   properties: {
     cardType: {
-      type: 'string',
-      minLength: 20
+      type: 'string'
+    },
+    value: {
+      type: 'number',
+      minimum: 11,
+      maximum: 88
     },
     remark: {
-      type: 'number',
+      type: 'string',
       maxLength: 255,
       minLength: 1
     },
     fromUser: {
-      type: 'string',
-      minLength: 20
+      type: 'string'
     },
     toUser: {
-      type: 'string',
-      minLength: 20
+      type: 'string'
     }
   }
 }

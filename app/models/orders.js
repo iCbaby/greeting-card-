@@ -29,16 +29,18 @@ const orderSchema = new Schema(
       trim: true
     },
     fromUser: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
       index: true,
       required: true
     },
     toUser: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
       index: true,
       required: true
+    },
+    isRead: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
