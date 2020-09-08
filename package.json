@@ -19,6 +19,7 @@
     "koa-json-error": "^3.1.2",
     "koa-logger": "^3.2.1",
     "koa-static": "^5.0.0",
+    "log4js": "^6.3.0",
     "mongoose": "^5.10.3"
   },
   "devDependencies": {
