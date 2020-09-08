@@ -32,6 +32,15 @@ class UsersServ {
     const users = await User.find()
     return users
   }
+
+  /**
+   * 更新用户
+   * @param {Object} query 查询条件
+   * @param {Object} params 更新参数件
+   */
+  async update (query, params) {
+    await User.findOneAndUpdate(query, params, { new: true })
+  }
 }
 
 module.exports = new UsersServ()

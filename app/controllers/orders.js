@@ -3,10 +3,17 @@
  * @author iC
  */
 
+const mongoose = require('mongoose')
 const { create, find } = require('../services/orders')
-const { findOne, registerUser } = require('../services/users')
+const { findOne: findOneUser, registerUser, update: updateUser } = require('../services/users')
 const { requiredValidator } = require('../utils/requiredValidator')
-const { CANT_SEND_TO_MYSELF, SEND_WITHOUT_QUOTA, CARD_VALUE_ERROR } = require('../errors/orders')
+const { enumValidator } = require('../utils/enumValidator')
+const {
+  CANT_SEND_TO_MYSELF,
+  SEND_WITHOUT_QUOTA,
+  CARD_VALUE_ERROR,
+  CARD_TYPE_ERROR
+} = require('../errors/orders')
 const { copyObj } = require('../utils/copyObj')
 // const { formatPagination } = require('../utils/pagination')
 
@@ -27,31 +34,49 @@ class OrdersCtl {
   async sendCard (ctx) {
     requiredValidator(['cardType', 'fromUser', 'toUser', 'remark', 'value'], ctx)
 
-    const { fromUser, toUser, value } = ctx.request.body
+    // 校验收发方、卡积分、卡类型
+    const { fromUser, toUser, cardType, value } = ctx.request.body
     if (fromUser === toUser) ctx.throw(412, CANT_SEND_TO_MYSELF)
-    if (value !== 11 && value !== 66 && value !== 88) ctx.throw(412, CARD_VALUE_ERROR)
+    enumValidator(value, [11, 66, 88], ctx, 412, CARD_VALUE_ERROR)
+    enumValidator(cardType, ['玩', '美', '赢', '家'], ctx, 412, CARD_TYPE_ERROR)
 
     // 检查发送者有没有额度发
-    const sender = await findOne({ dingdingNumber: fromUser })
-    if (!sender['cardLimit_' + value]) ctx.throw(412, `${SEND_WITHOUT_QUOTA}(${value}积分卡)`)
+    const canSend = await findOneUser({ dingdingNumber: fromUser, ownPoints: { $gte: value } })
+    if (!canSend) ctx.throw(412, `${SEND_WITHOUT_QUOTA}(${value}积分卡)`)
 
-    // 检查发送者有没有数据
-    const recipient = await findOne({ dingdingNumber: toUser })
-    if (!recipient) {
-      const params = {
-        dingdingNumber: toUser,
-        cardLimit_11: 2,
-        cardLimit_66: 2,
-        cardLimit_88: 2
+    // 创建session
+    const session = await mongoose.startSession()
+    session.startTransaction()
+
+    try {
+      // 检查发送者有没有数据
+      const recipient = await findOneUser({ dingdingNumber: toUser })
+      if (!recipient) {
+        const params = {
+          dingdingNumber: toUser,
+          points: 0
+        }
+        await registerUser(params)
       }
-      await registerUser(params)
+
+      const orderParams = copyObj(ctx.request.body)
+      await Promise.all([
+        create(orderParams),
+        updateUser({ dingdingNumber: toUser }, { $inc: { receivedPoints: value } }),
+        updateUser({ dingdingNumber: fromUser }, { $inc: { ownPoints: -value } })
+      ])
+
+      // 执行session
+      await session.commitTransaction()
+      ctx.status = 204
+    } catch (error) {
+      console.error(error)
+      // 中止session
+      await session.abortTransaction()
+      ctx.throw(error)
+    } finally {
+      session.endSession()
     }
-
-    const orderParams = copyObj(ctx.request.body)
-    sender['cardLimit_' + value]--
-    await Promise.all([create(orderParams), sender.save()])
-
-    ctx.status = 204
   }
 }
 

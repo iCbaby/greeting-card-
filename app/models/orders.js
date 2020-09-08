@@ -21,7 +21,7 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
       validate: value => {
-        return value === 10 || value === 66 || value === 88
+        return value === 11 || value === 66 || value === 88
       }
     },
     remark: {

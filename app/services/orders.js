@@ -16,6 +16,17 @@ class OrdersServ {
   }
 
   /**
+   * 查找收了多少钱
+   * @param {Object} userInfo 用户信息
+   */
+  async calReceivePoints (params) {
+    const receivePoints = await Order.aggregate()
+      .match({ toUser: params.dingdingNumber })
+      .group({ _id: '$toUser', receivePoints: { $sum: '$value' } })
+    return receivePoints
+  }
+
+  /**
    * 查找订单
    * @param {Object} params 查询条件
    */

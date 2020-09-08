@@ -15,15 +15,15 @@ class UsersCtl {
    */
   async findOrLoginUser (ctx, next) {
     const { dingdingNumber } = ctx.request.body
+    // 找用户
     const user = await findOne({ dingdingNumber })
     if (user) {
       ctx.body = user
     } else {
       const params = {
         dingdingNumber,
-        cardLimit_11: 2,
-        cardLimit_66: 2,
-        cardLimit_88: 2
+        ownPoints: 110,
+        receivedPoints: 0
       }
       const newUser = await registerUser(params)
       ctx.body = newUser

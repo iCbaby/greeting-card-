@@ -5,7 +5,6 @@
 
 const mongoose = require('mongoose')
 const { Schema, model } = mongoose
-require('mongoose-type-email')
 
 const userSchema = new Schema(
   {
@@ -18,22 +17,15 @@ const userSchema = new Schema(
       required: true,
       unique: true
     },
-    cardLimit_11: {
+    ownPoints: {
       type: Number,
       min: 0,
-      max: 2,
+      max: 3300,
       require: true
     },
-    cardLimit_66: {
+    receivedPoints: {
       type: Number,
       min: 0,
-      max: 2,
-      require: true
-    },
-    cardLimit_88: {
-      type: Number,
-      min: 0,
-      max: 2,
       require: true
     }
   },

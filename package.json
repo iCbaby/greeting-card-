@@ -19,8 +19,7 @@
     "koa-json-error": "^3.1.2",
     "koa-logger": "^3.2.1",
     "koa-static": "^5.0.0",
-    "mongoose": "^5.10.2",
-    "mongoose-type-email": "^1.0.12"
+    "mongoose": "^5.10.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
