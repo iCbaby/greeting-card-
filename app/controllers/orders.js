@@ -37,14 +37,14 @@ class OrdersCtl {
     // 校验收发方、卡积分、卡类型
     const { fromUser, toUser, cardType, value } = ctx.request.body
     if (fromUser === toUser) ctx.throw(412, CANT_SEND_TO_MYSELF)
-    enumValidator(value, [11, 66, 88], ctx, 412, CARD_VALUE_ERROR)
-    enumValidator(cardType, ['玩', '美', '赢', '家'], ctx, 412, CARD_TYPE_ERROR)
+    enumValidator(value, [11, 66, 88], ctx, CARD_VALUE_ERROR)
+    enumValidator(cardType, ['玩', '美', '赢', '家'], ctx, CARD_TYPE_ERROR)
 
     // 检查发送者有没有额度发
     const canSend = await findOneUser({ dingdingNumber: fromUser, ownPoints: { $gte: value } })
     if (!canSend) ctx.throw(412, `${SEND_WITHOUT_QUOTA}(${value}积分卡)`)
 
-    // 创建session
+    // 创建事务
     const session = await mongoose.startSession()
     session.startTransaction()
 
@@ -66,12 +66,12 @@ class OrdersCtl {
         updateUser({ dingdingNumber: fromUser }, { $inc: { ownPoints: -value } })
       ])
 
-      // 执行session
+      // 执行事务
       await session.commitTransaction()
       ctx.status = 204
     } catch (error) {
       console.error(error)
-      // 中止session
+      // 中止事务
       await session.abortTransaction()
       ctx.throw(error)
     } finally {
