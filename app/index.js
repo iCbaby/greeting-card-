@@ -6,7 +6,6 @@
 const path = require('path')
 const Koa = require('koa')
 const koaBody = require('koa-body')
-// const logger = require('koa-logger')
 const { icLogger } = require('./middlewares/logger')
 const koaStatic = require('koa-static')
 const error = require('koa-json-error')
@@ -36,7 +35,7 @@ app.use(
     }
   })
 )
-// app.use(logger())
+
 app.use(icLogger)
 
 routing(app)

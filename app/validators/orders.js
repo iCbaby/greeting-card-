@@ -12,20 +12,15 @@ const SCHEMA = {
     cardType: {
       type: 'string'
     },
-    value: {
-      type: 'number',
-      minimum: 11,
-      maximum: 88
-    },
     remark: {
       type: 'string',
       maxLength: 255,
       minLength: 1
     },
-    fromUser: {
+    fromUserId: {
       type: 'string'
     },
-    toUser: {
+    toUserId: {
       type: 'string'
     }
   }

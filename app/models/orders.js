@@ -17,23 +17,16 @@ const orderSchema = new Schema(
       enum: ['玩', '美', '赢', '家'],
       required: true
     },
-    value: {
-      type: Number,
-      required: true,
-      validate: value => {
-        return value === 11 || value === 66 || value === 88
-      }
-    },
     remark: {
       type: String,
       trim: true
     },
-    fromUser: {
+    fromUserId: {
       type: String,
       index: true,
       required: true
     },
-    toUser: {
+    toUserId: {
       type: String,
       index: true,
       required: true

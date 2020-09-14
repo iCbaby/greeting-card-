@@ -16,22 +16,25 @@ class OrdersServ {
   }
 
   /**
-   * 查找收了多少钱
-   * @param {Object} userInfo 用户信息
-   */
-  async calReceivePoints (params) {
-    const receivePoints = await Order.aggregate()
-      .match({ toUser: params.dingdingNumber })
-      .group({ _id: '$toUser', receivePoints: { $sum: '$value' } })
-    return receivePoints
-  }
-
-  /**
    * 查找订单
    * @param {Object} params 查询条件
    */
-  async find (params) {
-    const order = await Order.find()
+  async find (params = {}) {
+    const { fromUserId, perPage, page } = params
+
+    const orders = await Order.find({ fromUserId })
+      .limit(perPage)
+      .skip(page * perPage)
+    return orders
+  }
+
+  /**
+   * 更新订单
+   * @param {String} id 订单id
+   * @param {Object} params 查询参数
+   */
+  async update (id, params) {
+    const order = await Order.findByIdAndUpdate(id, params, { new: true })
     return order
   }
 }

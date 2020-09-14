@@ -13,18 +13,19 @@
   "license": "ISC",
   "dependencies": {
     "@koa/router": "^9.4.0",
-    "ajv": "^6.12.4",
+    "ajv": "^6.12.5",
     "koa": "^2.13.0",
     "koa-body": "^4.2.0",
     "koa-json-error": "^3.1.2",
     "koa-logger": "^3.2.1",
     "koa-static": "^5.0.0",
     "log4js": "^6.3.0",
-    "mongoose": "^5.10.3"
+    "mongoose": "^5.10.5",
+    "xlsx": "^0.16.7"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "eslint": "^7.8.1",
+    "eslint": "^7.9.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
