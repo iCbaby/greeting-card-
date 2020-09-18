@@ -16,16 +16,28 @@ class OrdersServ {
   }
 
   /**
-   * 查找订单
+   * 查找订单列表
    * @param {Object} params 查询条件
    */
   async find (params = {}) {
-    const { fromUserId, perPage, page } = params
+    const { fromUserId, toUserId, perPage, page } = params
+    const query = {}
+    if (fromUserId) query.fromUserId = fromUserId
+    if (toUserId) query.toUserId = toUserId
 
-    const orders = await Order.find({ fromUserId })
+    const orders = await Order.find(query)
       .limit(perPage)
       .skip(page * perPage)
     return orders
+  }
+
+  /**
+   * 查找特定订单
+   * @param {Object} params 查询条件
+   */
+  async findById (id) {
+    const order = await Order.findById(id)
+    return order
   }
 
   /**
@@ -36,6 +48,15 @@ class OrdersServ {
   async update (id, params) {
     const order = await Order.findByIdAndUpdate(id, params, { new: true })
     return order
+  }
+
+  /**
+   * 计算总数
+   * @param {Object} params 查询参数
+   */
+  async countAll (params) {
+    const count = await Order.countDocuments(params)
+    return count
   }
 }
 

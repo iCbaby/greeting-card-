@@ -9,6 +9,7 @@ const {
   findCards,
   findCardsByFromUserId,
   findCardsByToUserId,
+  cardDetail,
   sendCard,
   readCard
 } = require('../controllers/orders')
@@ -19,6 +20,7 @@ router.use(genValidator(orderValidate))
 router.get('/', findCards)
 router.get('/send/:id', findCardsByFromUserId)
 router.get('/receive/:id', findCardsByToUserId)
+router.get('/:id', cardDetail)
 router.post('/', sendCard)
 router.post('/:id', readCard)
 

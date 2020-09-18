@@ -1,4 +1,0 @@
-[2020-09-14T17:59:40.528] [INFO] httpLogger - URL: /orders/send/111, METHOD: GET, CTX_STATE: {}, POST_DATA: {}, USER_AGENT: PostmanRuntime/7.26.5
-[2020-09-14T18:00:33.702] [INFO] httpLogger - URL: /orders/send/111, METHOD: GET, CTX_STATE: {}, POST_DATA: {}, USER_AGENT: PostmanRuntime/7.26.5
-[2020-09-14T18:02:54.089] [INFO] httpLogger - URL: /orders/send/111, METHOD: GET, CTX_STATE: {}, POST_DATA: {}, USER_AGENT: PostmanRuntime/7.26.5
-[2020-09-14T18:03:13.961] [INFO] httpLogger - URL: /orders/send/111, METHOD: GET, CTX_STATE: {}, POST_DATA: {}, USER_AGENT: PostmanRuntime/7.26.5

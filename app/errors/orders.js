@@ -5,7 +5,7 @@
 
 module.exports = {
   CANT_SEND_TO_MYSELF: '感谢卡不能发送给自己',
-  SEND_WITHOUT_QUOTA: '没有发送额度',
-  CARD_VALUE_ERROR: '卡积分输入错误',
-  CARD_TYPE_ERROR: '卡类型输入错误'
+  CARD_TYPE_ERROR: '卡类型输入错误',
+  CANT_FIND_FROMUSER: '感谢卡找不到发卡用户',
+  CANT_FIND_TOUSER: '感谢卡找不到收卡用户'
 }

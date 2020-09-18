@@ -19,16 +19,19 @@ const orderSchema = new Schema(
     },
     remark: {
       type: String,
-      trim: true
+      trim: true,
+      required: true
     },
     fromUserId: {
       type: String,
       index: true,
+      trim: true,
       required: true
     },
     toUserId: {
       type: String,
       index: true,
+      trim: true,
       required: true
     },
     isRead: {
