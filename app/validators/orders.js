@@ -22,6 +22,12 @@ const SCHEMA = {
     },
     toUserId: {
       type: 'string'
+    },
+    fromUserName: {
+      type: 'string'
+    },
+    toUserName: {
+      type: 'string'
     }
   }
 }

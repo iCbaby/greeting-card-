@@ -17,7 +17,7 @@ async function getDingToken () {
   if (new Date().getTime() > getTokenTime + 1000 * expiresIn) {
     const { data } = await axios.get(url)
     getTokenTime = new Date().getTime()
-    expiresIn = data.expires_in
+    if (expiresIn !== data.expires_in) expiresIn = data.expires_in
     token = data.access_token
   }
   return token

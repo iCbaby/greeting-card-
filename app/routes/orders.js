@@ -11,7 +11,9 @@ const {
   findCardsByToUserId,
   cardDetail,
   sendCard,
-  readCard
+  readCard,
+  sendCorpconversation,
+  haveUnreadCard
 } = require('../controllers/orders')
 const { genValidator } = require('../middlewares/validator')
 const orderValidate = require('../validators/orders')
@@ -21,7 +23,8 @@ router.get('/', findCards)
 router.get('/send/:id', findCardsByFromUserId)
 router.get('/receive/:id', findCardsByToUserId)
 router.get('/:id', cardDetail)
-router.post('/', sendCard)
+router.get('/unread/:id', haveUnreadCard)
+router.post('/', sendCard, sendCorpconversation)
 router.post('/:id', readCard)
 
 module.exports = router

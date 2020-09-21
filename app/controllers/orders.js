@@ -3,7 +3,8 @@
  * @author iC
  */
 
-const { create, find, findById, update, countAll } = require('../services/orders')
+const dayjs = require('dayjs')
+const { create, find, universalFind, findById, update, countAll } = require('../services/orders')
 const { requiredValidator } = require('../utils/requiredValidator')
 const { enumValidator } = require('../utils/enumValidator')
 const {
@@ -16,6 +17,9 @@ const { copyObj } = require('../utils/copyObj')
 const { formatPagination } = require('../utils/pagination')
 const { getUserInfo } = require('../utils/getUserInfo')
 const { getDingUserDept } = require('../utils/getUserDept')
+const axios = require('axios').default
+const { getCorpconversationUrl } = require('../apis/dingDing')
+const { AGENT_ID } = require('../config/dingConf')
 
 class OrdersCtl {
   /**
@@ -127,7 +131,7 @@ class OrdersCtl {
    * 发卡
    * @param {Object} ctx 上下文
    */
-  async sendCard (ctx) {
+  async sendCard (ctx, next) {
     // 校验参数
     requiredValidator(['cardType', 'fromUserId', 'toUserId', 'remark'], ctx)
 
@@ -141,6 +145,18 @@ class OrdersCtl {
 
     create(copyObj(ctx.request.body))
     ctx.status = 204
+    await next()
+  }
+
+  /**
+   * 查看是否有卡未读
+   * @param {Object} ctx 上下文
+   */
+  async haveUnreadCard (ctx) {
+    const { id } = ctx.params
+    const params = { toUserId: id, isRead: false }
+    const card = await universalFind(params, null)
+    ctx.body = card.length > 0
   }
 
   /**
@@ -152,6 +168,45 @@ class OrdersCtl {
     const setData = { $set: { isRead: true } }
     update(id, setData)
     ctx.status = 204
+  }
+
+  /**
+   * 发钉钉消息
+   * @param {Object} ctx 上下文
+   */
+  async sendCorpconversation (ctx) {
+    const { toUserId, fromUserName } = ctx.request.body
+    const url = await getCorpconversationUrl()
+    await axios.post(url, {
+      agent_id: AGENT_ID,
+      userid_list: toUserId,
+      msg: {
+        msgtype: 'oa',
+        oa: {
+          message_url: 'eapp://pages/sendCard/sendCard',
+          head: {
+            bgcolor: 'FFBBBBBB',
+            text: '头部标题'
+          },
+          body: {
+            title: `${fromUserName}发给你一张双十一感谢卡`,
+            form: [
+              {
+                key: '发送人：',
+                value: fromUserName
+              },
+              {
+                key: '发送时间：',
+                value: dayjs().format('YYYY-MM-DD HH:mm:ss')
+              }
+            ],
+            content: '请点击进入小程序查看',
+            image: '@lADOADmaWMzazQKA',
+            author: fromUserName
+          }
+        }
+      }
+    })
   }
 }
 

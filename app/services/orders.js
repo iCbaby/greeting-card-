@@ -32,6 +32,17 @@ class OrdersServ {
   }
 
   /**
+   * 通用查找订单列表
+   * @param {Object} params 查询条件
+   * @param {Object} projection mongoose projection。很少用，不用管
+   * @param {Object} options 查询选项
+   */
+  async universalFind (params = {}, projection, options) {
+    const orders = await Order.find(params, projection, options)
+    return orders
+  }
+
+  /**
    * 查找特定订单
    * @param {Object} params 查询条件
    */

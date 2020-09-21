@@ -15,6 +15,7 @@ class LoginCtrl {
     const { authCode } = ctx.request.body
     const url = await getUserIdUrl(authCode)
     const { data } = await axios.get(url)
+    console.log(data)
     ctx.body = data
   }
 }

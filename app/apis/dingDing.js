@@ -32,8 +32,18 @@ async function getUserDeptUrl (deptId) {
   return `https://oapi.dingtalk.com/department/get?access_token=${token}&id=${deptId}`
 }
 
+/**
+ * 钉钉 推送工作消息
+ * @param {Object} 参数对象
+ */
+async function getCorpconversationUrl () {
+  const token = await getDingToken()
+  return `https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=${token}`
+}
+
 module.exports = {
   getUserIdUrl,
   getUserInfoUrl,
-  getUserDeptUrl
+  getUserDeptUrl,
+  getCorpconversationUrl
 }
