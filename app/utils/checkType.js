@@ -1,3 +1,12 @@
+/**
+ * @description 判断类型
+ * @author iC
+ */
+
+/**
+ * 判断类型
+ * @param {Any} o 需要判断的参数
+ */
 function checkType (o) {
   let type = ''
   switch (Object.prototype.toString.call(o)) {

@@ -1,3 +1,8 @@
+/**
+ * @description 统一挂在路由
+ * @author iC
+ */
+
 const fs = require('fs')
 module.exports = app => {
   fs.readdirSync(__dirname).forEach(file => {

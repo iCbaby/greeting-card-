@@ -1,5 +1,5 @@
 /**
- * @description 加密方法
+ * @description 加密
  * @author iC
  */
 

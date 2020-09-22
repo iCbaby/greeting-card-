@@ -1,3 +1,8 @@
+/**
+ * @description 深复制
+ * @author iC
+ */
+
 const { checkType } = require('./checkType')
 
 /**

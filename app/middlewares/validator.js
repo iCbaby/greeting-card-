@@ -28,10 +28,8 @@ function genValidator (validateFn) {
  * @param {Object} ctx 上下文
  */
 function checkError (error, ctx) {
-  if (error) {
-    console.log('errorerrorerrorerrorerror')
-    console.log(error)
-  }
+  if (error) console.error(error)
+
   switch (error.keyword) {
     case 'required':
       ctx.throw(412, `${SCHEMA_FAILED}: '${error.message}`)
