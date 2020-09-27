@@ -16,7 +16,7 @@ const {
 const { copyObj } = require('../utils/copyObj')
 const { formatPagination } = require('../utils/pagination')
 const { getUserInfo } = require('../utils/getUserInfo')
-const { getDingUserDept } = require('../utils/getUserDept')
+const { getUserDept } = require('../utils/getUserDept')
 const axios = require('axios').default
 const { getCorpconversationUrl } = require('../apis/dingDing')
 const { AGENT_ID } = require('../config/dingConf')
@@ -112,8 +112,8 @@ class OrdersCtl {
 
     // 拿用户部门
     const [fromUserDept, toUserDept] = await Promise.all([
-      getDingUserDept(fromUser.department[0]),
-      getDingUserDept(toUser.department[0])
+      getUserDept(fromUser.department[0]),
+      getUserDept(toUser.department[0])
     ])
 
     // 合并
