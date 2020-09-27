@@ -109,6 +109,8 @@ class OrdersCtl {
     // 拿用户信息
     const { fromUserId, toUserId } = order
     const [fromUser, toUser] = await Promise.all([getUserInfo(fromUserId), getUserInfo(toUserId)])
+    if (fromUser.errcode !== 0) ctx.throw(412, CANT_FIND_FROMUSER)
+    if (toUser.errcode !== 0) ctx.throw(412, CANT_FIND_TOUSER)
 
     // 拿用户部门
     const [fromUserDept, toUserDept] = await Promise.all([
@@ -138,6 +140,9 @@ class OrdersCtl {
     // 校验发卡人和收卡人
     const { fromUserId, toUserId } = ctx.request.body
     if (fromUserId === toUserId) ctx.throw(412, CANT_SEND_TO_MYSELF)
+    const [fromUser, toUser] = await Promise.all([getUserInfo(fromUserId), getUserInfo(toUserId)])
+    if (fromUser.errcode !== 0) ctx.throw(412, CANT_FIND_FROMUSER)
+    if (toUser.errcode !== 0) ctx.throw(412, CANT_FIND_TOUSER)
 
     // 校验cardType enum
     const { cardType } = ctx.request.body
