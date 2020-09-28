@@ -53,7 +53,7 @@ class OrdersCtl {
     // 合并
     const newOrders = orders.map((item, index) => {
       if (infoList[index] && !infoList[index].name) {
-        ctx.throw(412, CANT_FIND_TOUSER + ': ' + orders[index]._id)
+        ctx.throw(412, '这张' + CANT_FIND_TOUSER + ': ' + orders[index]._id)
       }
       item._doc.toUserName = infoList[index].name
       return item
@@ -87,7 +87,7 @@ class OrdersCtl {
     // 合并
     const newOrders = orders.map((item, index) => {
       if (infoList[index] && !infoList[index].name) {
-        ctx.throw(412, CANT_FIND_FROMUSER + ': ' + orders[index]._id)
+        ctx.throw(412, '这张' + CANT_FIND_FROMUSER + ': ' + orders[index]._id)
       }
       item._doc.fromUserName = infoList[index].name
       return item

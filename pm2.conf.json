@@ -1,6 +1,6 @@
 {
   "apps": {
-      "name": "weibo",
+      "name": "greeting-card-server",
       "script": "app",
       "watch": true,
       "ignore_watch": [
